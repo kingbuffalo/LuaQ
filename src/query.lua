@@ -7,15 +7,11 @@ function mt.__call(self, source)
 end
 setmetatable(query, mt)
 
-function tableIter(t)
+local function tableIter(t)
     local i = 0
     return function()
         i = i + 1
-        if i > #t then
-            return nil
-        else
-            return t[i]
-        end
+		return t[i]
     end
 end
 
@@ -49,7 +45,7 @@ local typeoffunc = type(function() end)
 local typeoftable = type({})
 local typeofstring = type("")
 
-function interpret(lambda)
+local function interpret(lambda)
     lambtype = type(lambda)
     if lambtype == typeoffunc then
         return lambda
@@ -229,9 +225,7 @@ function query.range(from, to)
         local n = from - 1
         return function()
             n = n + 1
-            if n <= to then
-                return n
-            end
+            if n <= to then return n end
             return nil
         end
     end
